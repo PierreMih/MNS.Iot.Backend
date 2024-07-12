@@ -256,7 +256,7 @@ src/MNS.Iot.Backend.Web/Logs/*
 src/MNS.Iot.Backend.Web.Host/Logs/*
 src/MNS.Iot.Backend.AuthServer/Logs/*
 src/MNS.Iot.Backend.HttpApi.Host/Logs/*
-src/MNS.Iot.Backend.HttpApi.Host/Logs/*
+src/MNS.Iot.Backend.HttpApi.HostWithIds/Logs/*
 src/MNS.Iot.Backend.DbMigrator/Logs/*
 src/MNS.Iot.Backend.Blazor.Server/Logs/*
 src/MNS.Iot.Backend.Blazor.Server.Tiered/Logs/*
