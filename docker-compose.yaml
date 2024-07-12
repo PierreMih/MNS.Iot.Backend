@@ -1,0 +1,57 @@
+services:
+  database:
+    container_name: PostgreSQL
+    image: postgres:16.3-alpine
+    restart: always
+    # set shared memory limit when using docker-compose
+    shm_size: 128mb
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./volumes/postgres-volume:/data/postgres
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - PGDATA=/data/postgres
+    
+  redis:
+    container_name: Redis
+    image: redis:7.2-alpine
+    restart: always
+    ports:
+      - '6379:6379'
+    command: redis-server --save 20 1 --loglevel warning
+    volumes:
+      - ./volumes/redis-volume:/data
+  
+  migrator:
+    container_name: Migrator
+    build:
+      dockerfile: ./src/MNS.Iot.Backend.DbMigrator/Dockerfile
+    restart: "no"
+    depends_on: 
+      - database
+    
+  authserver:
+    container_name: AuthServer
+    build:
+      dockerfile: ./src/MNS.Iot.Backend.AuthServer/Dockerfile
+    restart: always
+    ports:
+      - '44383:8080'
+    depends_on:
+      database :
+        condition: service_started
+      migrator:
+        condition: service_completed_successfully
+  
+  mainapp:
+    container_name: MainApp
+    build: 
+      dockerfile: ./src/MNS.Iot.Backend.HttpApi.Host/Dockerfile
+    restart: always
+    ports:
+      - '44371:8080'
+    depends_on:
+      migrator:
+        condition: service_completed_successfully
