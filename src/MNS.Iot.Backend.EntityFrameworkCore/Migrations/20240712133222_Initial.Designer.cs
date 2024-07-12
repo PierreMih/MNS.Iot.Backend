@@ -13,7 +13,7 @@ using Volo.Abp.EntityFrameworkCore;
 namespace MNS.Iot.Backend.Migrations
 {
     [DbContext(typeof(BackendDbContext))]
-    [Migration("20240712094409_Initial")]
+    [Migration("20240712133222_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
