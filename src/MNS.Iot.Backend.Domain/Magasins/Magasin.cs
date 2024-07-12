@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.PortableExecutable;
 using System.Text;
 using System.Threading.Tasks;
 using Volo.Abp.Domain.Entities;
@@ -13,19 +14,24 @@ namespace MNS.Iot.Backend.Magasins {
             Passerelles = passerelles;
         }
 
-        public void AjouterMesure(Guid passerelleId, Guid sondeId, double temperature) {
+        public void AjouterMesure(Guid passerelleId, Guid machineId, Guid sondeId, double temperature) {
             Passerelle passerelle = Passerelles.First((p) => p.Id == passerelleId);
-            passerelle.AjouterMesure(sondeId, temperature);
+            passerelle.AjouterMesure(machineId, sondeId, temperature);
         }
 
-        public IEnumerable<Sonde> RecupererSondes(Guid passerelleId) {
+        public IEnumerable<Machine> RecupererMachines(Guid passerelleId) {
             Passerelle passerelle = Passerelles.First((p) => p.Id == passerelleId);
-            return passerelle.RecupererSondes();
+            return passerelle.RecupererMachines();
         }
 
-        public IEnumerable<Mesure> RecupererMesures(Guid passerelleId, Guid sondeId) {
+        public IEnumerable<Sonde> RecupererSondes(Guid passerelleId, Guid machineId) {
             Passerelle passerelle = Passerelles.First((p) => p.Id == passerelleId);
-            return passerelle.RecupererMesures(sondeId);
+            return passerelle.RecupererSondes(machineId);
+        }
+
+        public IEnumerable<Mesure> RecupererMesures(Guid passerelleId, Guid machineId, Guid sondeId) {
+            Passerelle passerelle = Passerelles.First((p) => p.Id == passerelleId);
+            return passerelle.RecupererMesures(machineId, sondeId);
         }
 
     }
