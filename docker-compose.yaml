@@ -32,18 +32,18 @@ services:
     depends_on: 
       - database
     
-  authserver:
-    container_name: AuthServer
-    build:
-      dockerfile: ./src/MNS.Iot.Backend.AuthServer/Dockerfile
-    restart: always
-    ports:
-      - '44383:8080'
-    depends_on:
-      database :
-        condition: service_started
-      migrator:
-        condition: service_completed_successfully
+#  authserver:
+#    container_name: AuthServer
+#    build:
+#      dockerfile: ./src/MNS.Iot.Backend.AuthServer/Dockerfile
+#    restart: always
+#    ports:
+#      - '44383:8080'
+#    depends_on:
+#      database :
+#        condition: service_started
+#      migrator:
+#        condition: service_completed_successfully
   
   mainapp:
     container_name: MainApp
