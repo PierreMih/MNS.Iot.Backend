@@ -1,5 +1,23 @@
 # MNS.Iot.Backend
 
+## Prérequis
+
+- Docker
+- .NET 8
+
+## Comment lancer
+
+## Services
+
+| Description                | Nom | Port   | Username | Password |
+|----------------------------|---------------|--------|--|--|
+| Base de données PostgreSQL | database   | 5432   |postres|postgres|
+| Cache serveur Redis        | redis                      | 6379   |||
+| Migrateur DB               | migrator                   |        |||
+| Serveur d'authentification | authserver                 |44383|||
+| Application principale | mainapp| 44371  |||
+----------------------------------------
+Template readme par défaut en dessous
 ## About this solution
 
 This is a layered startup solution based on [Domain Driven Design (DDD)](https://docs.abp.io/en/abp/latest/Domain-Driven-Design) practises. All the fundamental ABP modules are already installed. 
