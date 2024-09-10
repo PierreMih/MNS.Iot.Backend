@@ -4,11 +4,18 @@ using System.Linq;
 using System.Reflection.PortableExecutable;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 using Volo.Abp.Domain.Entities;
 using Volo.Abp.Domain.Entities.Auditing;
 
 namespace MNS.Iot.Backend.Magasins {
     public class Magasin : FullAuditedAggregateRoot<Guid> {
+        public Magasin(Guid id, string name) : base(id) {
+            Name = name;
+            MagasinPasserelleJoinEntities = new();
+        }
+
+        public string Name { get; set; }
         public List<MagasinPasserelleJoinEntity> MagasinPasserelleJoinEntities { get; set; }
 
         // public void AjouterMesure(Guid passerelleId, Guid machineId, Guid sondeId, double temperature) {

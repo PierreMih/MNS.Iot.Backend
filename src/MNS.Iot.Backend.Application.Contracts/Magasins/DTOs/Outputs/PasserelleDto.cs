@@ -6,8 +6,10 @@ using System.Text;
 using System.Threading.Tasks;
 using Volo.Abp.Application.Dtos;
 
-namespace MNS.Iot.Backend.Magasins {
-    public class PasserelleDto: EntityDto<Guid> {
+namespace MNS.Iot.Backend.Magasins.DTOs.Outputs
+{
+    public class PasserelleDto : EntityDto<Guid>
+    {
         public List<MachineDto> Machines { get; set; }
     }
 }

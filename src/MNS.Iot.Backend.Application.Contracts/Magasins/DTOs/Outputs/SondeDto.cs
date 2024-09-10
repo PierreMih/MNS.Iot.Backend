@@ -5,8 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using Volo.Abp.Application.Dtos;
 
-namespace MNS.Iot.Backend.Magasins {
-    public class SondeDto: EntityDto<Guid> {
+namespace MNS.Iot.Backend.Magasins.DTOs.Outputs
+{
+    public class SondeDto : EntityDto<Guid>
+    {
         public List<MesureDto> Mesures { get; set; }
 
         public string IdPhysique { get; set; }

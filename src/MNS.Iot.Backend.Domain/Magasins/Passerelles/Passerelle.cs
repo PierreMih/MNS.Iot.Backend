@@ -6,7 +6,13 @@ using Volo.Abp.Domain.Entities.Auditing;
 
 namespace MNS.Iot.Backend.Magasins.Passerelles {
     public class Passerelle : FullAuditedAggregateRoot<Guid> {
-        
+        public Passerelle(Guid id, string idPhysique, string name): base(id) {
+            IdPhysique = idPhysique;
+            Name = name;
+        }
+
+        public string IdPhysique { get; set; }
+        public string Name { get; set; }
         public List<PasserelleMachineJoinEntity> MachinePasserelleJoinEntities { get; set; }
 
         // public void AjouterMesure(Guid machineId, Guid sondeId, double temperature) {
