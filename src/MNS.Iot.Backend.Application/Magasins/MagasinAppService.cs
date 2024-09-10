@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace MNS.Iot.Backend.Magasins {
-    public class MagasinAppService {
+    public class MagasinAppService : BackendAppService, IMagasinAppService{
         private readonly IMagasinRepository _magasinRepository;
 
         public MagasinAppService(IMagasinRepository magasinRepository) {
