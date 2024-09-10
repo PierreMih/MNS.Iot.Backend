@@ -11,8 +11,11 @@ namespace MNS.Iot.Backend.Magasins {
     public class Sonde : Entity<Guid> {
         public List<Mesure> Mesures { get; set; }
 
-        public Sonde(List<Mesure> mesures) {
+        public string idPhysique { get; set; }
+
+        public Sonde(List<Mesure> mesures, string idPhysique) {
             Mesures = mesures;
+            this.idPhysique = idPhysique;
         }
 
         public void AjouterMesure(double temperature) {

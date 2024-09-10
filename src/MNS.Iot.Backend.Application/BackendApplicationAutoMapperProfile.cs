@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using MNS.Iot.Backend.Magasins;
 
 namespace MNS.Iot.Backend;
 
@@ -6,8 +7,10 @@ public class BackendApplicationAutoMapperProfile : Profile
 {
     public BackendApplicationAutoMapperProfile()
     {
-        /* You can configure your AutoMapper mapping configuration here.
-         * Alternatively, you can split your mapping configurations
-         * into multiple profile classes for a better organization. */
+        CreateMap<Magasin, MagasinDto>();
+        CreateMap<Passerelle, PasserelleDto>();
+        CreateMap<Machine, MachineDto>();
+        CreateMap<Sonde, SondeDto>();
+        CreateMap<Mesure, MesureDto>();
     }
 }
