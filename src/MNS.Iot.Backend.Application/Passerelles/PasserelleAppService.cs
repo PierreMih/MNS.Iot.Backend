@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Volo.Abp.Guids;
+using Volo.Abp.ObjectMapping;
 
 namespace MNS.Iot.Backend.Passerelles {
     public class PasserelleAppService : BackendAppService, IPasserelleAppService {
@@ -43,8 +44,9 @@ namespace MNS.Iot.Backend.Passerelles {
             await _magasinPasserelleManager.DeletePasserelle(magasin, passerelle);
         }
 
-        public Task<IEnumerable<PasserelleDto>> GetListPasserelle(Guid magasinId) {
-            throw new NotImplementedException();
+        public async Task<IEnumerable<PasserelleDto>> GetListPasserelle(Guid magasinId) {
+            List<Passerelle> passerelleList = await _passerelleRepository.GetListByMagasinAsync(magasinId);
+            return passerelleList.Select(p => ObjectMapper.Map<Passerelle, PasserelleDto>(p));
         }
 
         public Task<PasserelleDto> GetPasserelle(Guid id) {

@@ -22,7 +22,10 @@ namespace MNS.Iot.Backend.Magasins {
         }
 
         public async Task DeletePasserelle(Magasin magasin, Passerelle passerelle) {
-
+            MagasinPasserelleJoinEntity joinEntity = magasin.MagasinPasserelleJoinEntities
+                .First(je => je.MagasinId == magasin.Id && je.PasserelleId == passerelle.Id);
+            magasin.MagasinPasserelleJoinEntities.Remove(joinEntity);
+            magasin = await _magasinRepository.UpdateAsync(magasin);
         }
     }
 }
