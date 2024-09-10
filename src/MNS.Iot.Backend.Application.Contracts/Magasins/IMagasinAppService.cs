@@ -9,6 +9,6 @@ namespace MNS.Iot.Backend.Magasins {
         public Task<IEnumerable<MagasinDto>> GetListMagasin();
         public Task<MagasinDto> GetMagasin(Guid id);
 
-        public Task<MagasinDto> PostMagasin(MagasinDto magasinDto);
+        // public Task<MagasinDto> PostMagasin(MagasinDto magasinDto);
     }
 }

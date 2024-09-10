@@ -1,14 +1,20 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using MNS.Iot.Backend.Magasins;
+using MNS.Iot.Backend.Magasins.Machines;
+using MNS.Iot.Backend.Magasins.Passerelles;
+using MNS.Iot.Backend.Magasins.Sondes;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
 using Volo.Abp.BackgroundJobs.EntityFrameworkCore;
 using Volo.Abp.Data;
 using Volo.Abp.DependencyInjection;
 using Volo.Abp.EntityFrameworkCore;
+using Volo.Abp.EntityFrameworkCore.Modeling;
 using Volo.Abp.FeatureManagement.EntityFrameworkCore;
 using Volo.Abp.Identity;
 using Volo.Abp.Identity.EntityFrameworkCore;
 using Volo.Abp.OpenIddict.EntityFrameworkCore;
 using Volo.Abp.PermissionManagement.EntityFrameworkCore;
+using Volo.Abp.SettingManagement;
 using Volo.Abp.SettingManagement.EntityFrameworkCore;
 using Volo.Abp.TenantManagement;
 using Volo.Abp.TenantManagement.EntityFrameworkCore;
@@ -23,7 +29,11 @@ public class BackendDbContext :
     IIdentityDbContext,
     ITenantManagementDbContext
 {
-    /* Add DbSet properties for your Aggregate Roots / Entities here. */
+    public DbSet<Magasin> Magasins { get; set; }
+    public DbSet<Passerelle> Passerelles { get; set; }
+    public DbSet<Machine> Machines { get; set; }
+    public DbSet<Sonde> Sondes { get; set; }
+    
 
     #region Entities from the modules
 
@@ -76,11 +86,53 @@ public class BackendDbContext :
 
         /* Configure your own tables/entities inside here */
 
-        //builder.Entity<YourEntity>(b =>
-        //{
-        //    b.ToTable(BackendConsts.DbTablePrefix + "YourEntities", BackendConsts.DbSchema);
-        //    b.ConfigureByConvention(); //auto configure for the base class props
-        //    //...
-        //});
+        builder.Entity<Magasin>(magasin =>
+        {
+            magasin.ToTable(BackendConsts.DbTablePrefix + "Magasins", BackendConsts.DbSchema);
+            magasin.ConfigureByConvention();
+            magasin.HasMany(m => m.MagasinPasserelleJoinEntities).WithOne().IsRequired();
+        });
+        builder.Entity<MagasinPasserelleJoinEntity>(mpje =>
+        {
+            mpje.ToTable(BackendConsts.DbTablePrefix + "MagasinPasserelleJoinEntities", BackendConsts.DbSchema);
+            mpje.ConfigureByConvention();
+            mpje.HasKey(je => je.MagasinId);
+            mpje.HasKey(je => je.PasserelleId);
+        });
+        
+        builder.Entity<Passerelle>(passerelle =>
+        {
+            passerelle.ToTable(BackendConsts.DbTablePrefix + "Passerelles", BackendConsts.DbSchema);
+            passerelle.ConfigureByConvention();
+            passerelle.HasMany(p => p.MachinePasserelleJoinEntities).WithOne().IsRequired();
+        });
+        builder.Entity<PasserelleMachineJoinEntity>(mpje =>
+        {
+            mpje.ToTable(BackendConsts.DbTablePrefix + "MachinePasserelleJoinEntities", BackendConsts.DbSchema);
+            mpje.ConfigureByConvention();
+            mpje.HasKey(je => je.PasserelleId);
+            mpje.HasKey(je => je.MachineId);
+        });
+        
+        builder.Entity<Machine>(machine =>
+        {
+            machine.ToTable(BackendConsts.DbTablePrefix + "Machines", BackendConsts.DbSchema);
+            machine.ConfigureByConvention();
+            machine.HasMany(m => m.MachineSondeJoinEntities).WithOne().IsRequired();
+        });
+        builder.Entity<MachineSondeJoinEntity>(msje =>
+        {
+            msje.ToTable(BackendConsts.DbTablePrefix + "MachineSondeJoinEntities", BackendConsts.DbSchema);
+            msje.ConfigureByConvention();
+            msje.HasKey(je => je.MachineId);
+            msje.HasKey(je => je.SondeId);
+        });
+        
+        builder.Entity<Sonde>(sonde =>
+        {
+            sonde.ToTable(BackendConsts.DbTablePrefix + "Sondes", BackendConsts.DbSchema);
+            sonde.ConfigureByConvention();
+            sonde.OwnsMany(s => s.Mesures);
+        });
     }
 }

@@ -9,6 +9,6 @@ namespace MNS.Iot.Backend.Magasins {
     public class SondeDto: EntityDto<Guid> {
         public List<MesureDto> Mesures { get; set; }
 
-        public string idPhysique { get; set; }
+        public string IdPhysique { get; set; }
     }
 }
