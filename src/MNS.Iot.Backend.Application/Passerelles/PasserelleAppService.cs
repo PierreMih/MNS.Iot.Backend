@@ -45,12 +45,18 @@ namespace MNS.Iot.Backend.Passerelles {
         }
 
         public async Task<IEnumerable<PasserelleDto>> GetListPasserelle(Guid magasinId) {
-            List<Passerelle> passerelleList = await _passerelleRepository.GetListByMagasinAsync(magasinId);
+            Magasin magasin = await _magasinRepository.GetAsync(magasinId);
+            IEnumerable<Guid> passerelleIdList = magasin.MagasinPasserelleJoinEntities.Select(je => je.PasserelleId);
+            List<Passerelle> passerelleList = new();
+            foreach(var passerelleId in passerelleIdList) {
+                passerelleList.Add(await _passerelleRepository.GetAsync(passerelleId));
+            }
             return passerelleList.Select(p => ObjectMapper.Map<Passerelle, PasserelleDto>(p));
         }
 
-        public Task<PasserelleDto> GetPasserelle(Guid id) {
-            throw new NotImplementedException();
+        public async Task<PasserelleDto> GetPasserelle(Guid id) {
+            Passerelle passerelle =  await _passerelleRepository.GetAsync(id);
+            return ObjectMapper.Map<Passerelle, PasserelleDto>(passerelle);
         }
     }
 }
