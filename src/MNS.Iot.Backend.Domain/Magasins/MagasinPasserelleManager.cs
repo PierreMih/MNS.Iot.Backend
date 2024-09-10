@@ -15,9 +15,11 @@ namespace MNS.Iot.Backend.Magasins {
             _magasinRepository = magasinRepository;
         }
 
-        public async Task<Magasin> AddPasserelleToMagasin(Magasin magasin, Passerelle passerelle) {
-            magasin.MagasinPasserelleJoinEntities.Add(new MagasinPasserelleJoinEntity(magasin.Id, passerelle.Id));
-            magasin = await _magasinRepository.UpdateAsync(magasin);
+        public async Task<Magasin> AddPasserelleToMagasin(Magasin magasin, Passerelle passerelle)
+        {
+            var je = new MagasinPasserelleJoinEntity(magasin.Id, passerelle.Id);
+            magasin.MagasinPasserelleJoinEntities.Add(je);
+            // magasin = await _magasinRepository.UpdateAsync(magasin);
             return magasin;
         }
 
@@ -25,7 +27,7 @@ namespace MNS.Iot.Backend.Magasins {
             MagasinPasserelleJoinEntity joinEntity = magasin.MagasinPasserelleJoinEntities
                 .First(je => je.MagasinId == magasin.Id && je.PasserelleId == passerelle.Id);
             magasin.MagasinPasserelleJoinEntities.Remove(joinEntity);
-            magasin = await _magasinRepository.UpdateAsync(magasin);
+            // magasin = await _magasinRepository.UpdateAsync(magasin);
         }
     }
 }

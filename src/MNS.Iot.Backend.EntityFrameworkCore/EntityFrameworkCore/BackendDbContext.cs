@@ -90,7 +90,7 @@ public class BackendDbContext :
         {
             magasin.ToTable(BackendConsts.DbTablePrefix + "Magasins", BackendConsts.DbSchema);
             magasin.ConfigureByConvention();
-            magasin.HasMany(m => m.MagasinPasserelleJoinEntities).WithOne().IsRequired();
+            magasin.HasMany(m => m.MagasinPasserelleJoinEntities).WithOne().HasForeignKey(je => je.MagasinId).IsRequired();
         });
         builder.Entity<MagasinPasserelleJoinEntity>(mpje =>
         {

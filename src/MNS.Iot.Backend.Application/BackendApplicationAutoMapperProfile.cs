@@ -1,6 +1,9 @@
 ﻿using AutoMapper;
 using MNS.Iot.Backend.Magasins;
 using MNS.Iot.Backend.Magasins.DTOs.Outputs;
+using MNS.Iot.Backend.Magasins.Machines;
+using MNS.Iot.Backend.Magasins.Passerelles;
+using MNS.Iot.Backend.Magasins.Sondes;
 
 namespace MNS.Iot.Backend;
 
