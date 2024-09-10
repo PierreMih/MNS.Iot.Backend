@@ -19,8 +19,8 @@ namespace MNS.Iot.Backend.Magasins.Sondes {
             IdPhysique = idPhysique;
         }
 
-        public void AjouterMesure(double temperature) {
-            Mesures.Add(new Mesure(temperature));
-        }
+        // public void AjouterMesure(double temperature) {
+        //     Mesures.Add(new Mesure(temperature));
+        // }
     }
 }

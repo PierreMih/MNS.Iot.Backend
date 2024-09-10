@@ -132,7 +132,16 @@ public class BackendDbContext :
         {
             sonde.ToTable(BackendConsts.DbTablePrefix + "Sondes", BackendConsts.DbSchema);
             sonde.ConfigureByConvention();
-            sonde.OwnsMany(s => s.Mesures);
+            sonde.HasMany(s => s.Mesures)
+                .WithOne()
+                .HasForeignKey(m => m.SondeId)
+                .IsRequired();
+        });
+
+        builder.Entity<Mesure>(mesure =>
+        {
+            mesure.ToTable(BackendConsts.DbTablePrefix + "Mesures", BackendConsts.DbSchema);
+            mesure.ConfigureByConvention();
         });
     }
 }

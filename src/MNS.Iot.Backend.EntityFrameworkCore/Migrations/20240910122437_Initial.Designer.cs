@@ -13,8 +13,8 @@ using Volo.Abp.EntityFrameworkCore;
 namespace MNS.Iot.Backend.Migrations
 {
     [DbContext(typeof(BackendDbContext))]
-    [Migration("20240910113758_AggregateRootEverywhere")]
-    partial class AggregateRootEverywhere
+    [Migration("20240910122437_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -229,6 +229,27 @@ namespace MNS.Iot.Backend.Migrations
                     b.HasIndex("PasserelleId");
 
                     b.ToTable("AppMachinePasserelleJoinEntities", (string)null);
+                });
+
+            modelBuilder.Entity("MNS.Iot.Backend.Magasins.Sondes.Mesure", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<Guid>("SondeId")
+                        .HasColumnType("uuid");
+
+                    b.Property<double>("Temperature")
+                        .HasColumnType("double precision");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SondeId");
+
+                    b.ToTable("Mesure");
                 });
 
             modelBuilder.Entity("MNS.Iot.Backend.Magasins.Sondes.Sonde", b =>
@@ -2106,34 +2127,13 @@ namespace MNS.Iot.Backend.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("MNS.Iot.Backend.Magasins.Sondes.Sonde", b =>
+            modelBuilder.Entity("MNS.Iot.Backend.Magasins.Sondes.Mesure", b =>
                 {
-                    b.OwnsMany("MNS.Iot.Backend.Magasins.Sondes.Mesure", "Mesures", b1 =>
-                        {
-                            b1.Property<Guid>("SondeId")
-                                .HasColumnType("uuid");
-
-                            b1.Property<int>("Id")
-                                .ValueGeneratedOnAdd()
-                                .HasColumnType("integer");
-
-                            NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b1.Property<int>("Id"));
-
-                            b1.Property<DateTime>("Date")
-                                .HasColumnType("timestamp without time zone");
-
-                            b1.Property<double>("Temperature")
-                                .HasColumnType("double precision");
-
-                            b1.HasKey("SondeId", "Id");
-
-                            b1.ToTable("Mesure");
-
-                            b1.WithOwner()
-                                .HasForeignKey("SondeId");
-                        });
-
-                    b.Navigation("Mesures");
+                    b.HasOne("MNS.Iot.Backend.Magasins.Sondes.Sonde", null)
+                        .WithMany("Mesures")
+                        .HasForeignKey("SondeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Volo.Abp.AuditLogging.AuditLogAction", b =>
@@ -2291,6 +2291,11 @@ namespace MNS.Iot.Backend.Migrations
             modelBuilder.Entity("MNS.Iot.Backend.Magasins.Passerelles.Passerelle", b =>
                 {
                     b.Navigation("MachinePasserelleJoinEntities");
+                });
+
+            modelBuilder.Entity("MNS.Iot.Backend.Magasins.Sondes.Sonde", b =>
+                {
+                    b.Navigation("Mesures");
                 });
 
             modelBuilder.Entity("Volo.Abp.AuditLogging.AuditLog", b =>
