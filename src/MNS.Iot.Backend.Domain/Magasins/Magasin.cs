@@ -17,27 +17,6 @@ namespace MNS.Iot.Backend.Magasins {
         }
 
         public string Name { get; set; }
-        public List<Passerelle> Passerelles { get; set; }
-
-        // public void AjouterMesure(Guid passerelleId, Guid machineId, Guid sondeId, double temperature) {
-        //     Passerelle passerelle = Passerelles.First((p) => p.Id == passerelleId);
-        //     passerelle.AjouterMesure(machineId, sondeId, temperature);
-        // }
-        //
-        // public IEnumerable<Machine> RecupererMachines(Guid passerelleId) {
-        //     Passerelle passerelle = Passerelles.First((p) => p.Id == passerelleId);
-        //     return passerelle.RecupererMachines();
-        // }
-        //
-        // public IEnumerable<Sonde> RecupererSondes(Guid passerelleId, Guid machineId) {
-        //     Passerelle passerelle = Passerelles.First((p) => p.Id == passerelleId);
-        //     return passerelle.RecupererSondes(machineId);
-        // }
-        //
-        // public IEnumerable<Mesure> RecupererMesures(Guid passerelleId, Guid machineId, Guid sondeId) {
-        //     Passerelle passerelle = Passerelles.First((p) => p.Id == passerelleId);
-        //     return passerelle.RecupererMesures(machineId, sondeId);
-        // }
-
+        public List<Passerelle> Passerelles { get; set; 
     }
 }

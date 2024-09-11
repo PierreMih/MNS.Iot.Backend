@@ -27,9 +27,5 @@ namespace MNS.Iot.Backend.Magasins.Sondes {
             Name = name;
             Mesures = new();
         }
-
-        // public void AjouterMesure(double temperature) {
-        //     Mesures.Add(new Mesure(temperature));
-        // }
     }
 }
