@@ -47,9 +47,6 @@ namespace MNS.Iot.Backend.Passerelles {
 
             magasin.Passerelles.Remove(passerelle);
             await _passerelleRepository.DeleteAsync(passerelle);
-            // var magasinList = await _magasinRepository.GetListAsync(true);
-            // Magasin magasin = magasinList.First(m => m.MagasinPasserelleJoinEntities.Any(je => je.PasserelleId == id));
-            // await _magasinPasserelleManager.DeletePasserelle(magasin, passerelle);
         }
 
         public async Task<IEnumerable<PasserelleDto>> GetListPasserelle(Guid magasinId)

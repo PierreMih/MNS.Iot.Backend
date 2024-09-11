@@ -3,6 +3,7 @@ using MNS.Iot.Backend.Magasins;
 using MNS.Iot.Backend.Magasins.Machines;
 // using MNS.Iot.Backend.Magasins.Machines;
 using MNS.Iot.Backend.Magasins.Passerelles;
+using MNS.Iot.Backend.Magasins.Sondes;
 // using MNS.Iot.Backend.Magasins.Sondes;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
 using Volo.Abp.BackgroundJobs.EntityFrameworkCore;
@@ -33,7 +34,7 @@ public class BackendDbContext :
     public DbSet<Magasin> Magasins { get; set; }
     public DbSet<Passerelle> Passerelles { get; set; }
     public DbSet<Machine> Machines { get; set; }
-    // public DbSet<Sonde> Sondes { get; set; }
+    public DbSet<Sonde> Sondes { get; set; }
     
 
     #region Entities from the modules
@@ -113,26 +114,21 @@ public class BackendDbContext :
         {
             machine.ToTable(BackendConsts.DbTablePrefix + "Machines", BackendConsts.DbSchema);
             machine.ConfigureByConvention();
-            // machine.HasMany(m => m.MachineSondeJoinEntities).WithOne().IsRequired();
+            machine.HasMany(m => m.Sondes)
+                .WithOne(s => s.Machine)
+                .HasForeignKey(s => s.MachineId)
+                .IsRequired();
         });
         
-        // builder.Entity<MachineSondeJoinEntity>(msje =>
-        // {
-        //     msje.ToTable(BackendConsts.DbTablePrefix + "MachineSondeJoinEntities", BackendConsts.DbSchema);
-        //     msje.ConfigureByConvention();
-        //     msje.HasKey(je => je.MachineId);
-        //     msje.HasKey(je => je.SondeId);
-        // });
-        //
-        // builder.Entity<Sonde>(sonde =>
-        // {
-        //     sonde.ToTable(BackendConsts.DbTablePrefix + "Sondes", BackendConsts.DbSchema);
-        //     sonde.ConfigureByConvention();
-        //     sonde.HasMany(s => s.Mesures)
-        //         .WithOne()
-        //         .HasForeignKey(m => m.SondeId)
-        //         .IsRequired();
-        // });
+        builder.Entity<Sonde>(sonde =>
+        {
+            sonde.ToTable(BackendConsts.DbTablePrefix + "Sondes", BackendConsts.DbSchema);
+            sonde.ConfigureByConvention();
+            // sonde.HasMany(s => s.Mesures)
+            //     .WithOne(m => m.Sonde)
+            //     .HasForeignKey(m => m.SondeId)
+            //     .IsRequired();
+        });
         //
         // builder.Entity<Mesure>(mesure =>
         // {
