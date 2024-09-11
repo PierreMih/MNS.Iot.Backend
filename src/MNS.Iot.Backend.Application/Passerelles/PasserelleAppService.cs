@@ -77,17 +77,17 @@ namespace MNS.Iot.Backend.Passerelles {
 
         public async Task InsertBatchMesures(SondeBatchDto sondeBatchDto)
         {
-            var passerelleExiste = (await _passerelleRepository.GetQueryableAsync())
+            var passerelleExiste = (await _passerelleRepository.WithDetailsAsync())
                 .Any(p => p.IdPhysique == sondeBatchDto.PasserellePhysicalId);
             Passerelle passerelle;
             if (passerelleExiste)
             {
-                passerelle = (await _passerelleRepository.GetQueryableAsync())
+                passerelle = (await _passerelleRepository.WithDetailsAsync())
                     .First(p => p.IdPhysique == sondeBatchDto.PasserellePhysicalId);
             }
             else
             {
-                var magasin = (await _magasinRepository.GetQueryableAsync()).First();
+                var magasin = (await _magasinRepository.WithDetailsAsync()).First();
                 passerelle = new Passerelle(_guidGenerator.Create(), magasin, sondeBatchDto.PasserellePhysicalId,
                     sondeBatchDto.PasserellePhysicalId);
                 passerelle = await _passerelleRepository.InsertAsync(passerelle);
