@@ -15,7 +15,7 @@ namespace MNS.Iot.Backend.Passerelles
 
         public Task<IEnumerable<PasserelleDto>> GetListPasserelle(Guid magasinId);
         public Task<PasserelleDto> GetPasserelle(Guid id);
-        public Task<PasserelleDto> CreatePasserelle(CreatePasserelleDto createPasserelleDto)
+        public Task<PasserelleDto> CreatePasserelle(CreatePasserelleDto createPasserelleDto);
         public Task DeletePasserelle(Guid id);
         public Task InsertBatchMesures(SondeBatchDto sondeBatchDto);
     }
