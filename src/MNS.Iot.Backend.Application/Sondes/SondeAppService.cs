@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
 using MNS.Iot.Backend.Magasins.Machines;
 using MNS.Iot.Backend.Magasins.Sondes;
@@ -25,8 +26,9 @@ public class SondeAppService : BackendAppService, ISondeAppService
 
     public async Task<IEnumerable<SondeDto>> GetSondesByMachineIdAsync(Guid machineId)
     {
-        var machine = await _machineRepository.GetAsync(machineId, true);
-        return machine.Sondes.Select(s => ObjectMapper.Map<Sonde, SondeDto>(s));
+        var query = await _sondeRepository.WithDetailsAsync();
+        query = query.Where(s => s.MachineId == machineId);
+        return query.AsEnumerable().Select(s => ObjectMapper.Map<Sonde, SondeDto>(s));
     }
 
     public async Task<SondeDto> GetSondeAsync(Guid id)

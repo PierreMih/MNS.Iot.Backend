@@ -52,8 +52,10 @@ namespace MNS.Iot.Backend.Passerelles {
 
         public async Task<IEnumerable<PasserelleDto>> GetListPasserelle(Guid magasinId)
         {
-            var magasin = await _magasinRepository.GetAsync(magasinId);
-            return magasin.Passerelles.Select(p => ObjectMapper.Map<Passerelle, PasserelleDto>(p));
+            var query = await _passerelleRepository.WithDetailsAsync();
+            query = query.Where(p => p.MagasinId == magasinId);
+            
+            return query.AsEnumerable().Select(p => ObjectMapper.Map<Passerelle, PasserelleDto>(p));
         }
 
         public async Task<PasserelleDto> GetPasserelle(Guid id) {

@@ -25,8 +25,9 @@ public class MachineAppService : BackendAppService, IMachineAppService
 
     public async Task<IEnumerable<MachineDto>> GetMachinesByPasserelleIdAsync(Guid passerelleId)
     {
-        var passerelle = await _passerelleRepository.GetAsync(passerelleId, true); 
-        return passerelle.Machines.Select(m => ObjectMapper.Map<Machine, MachineDto>(m));
+        var query = await _machineRepository.WithDetailsAsync();
+        query = query.Where(m => m.PasserelleId == passerelleId);
+        return query.AsEnumerable().Select(m => ObjectMapper.Map<Machine, MachineDto>(m));
     }
 
     public async Task<MachineDto> GetMachineAsync(Guid id)
