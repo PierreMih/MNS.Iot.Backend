@@ -35,7 +35,7 @@ public class BackendDbContext :
     public DbSet<Passerelle> Passerelles { get; set; }
     public DbSet<Machine> Machines { get; set; }
     public DbSet<Sonde> Sondes { get; set; }
-    
+    public DbSet<Mesure> Mesures { get; set; }
 
     #region Entities from the modules
 
@@ -124,16 +124,16 @@ public class BackendDbContext :
         {
             sonde.ToTable(BackendConsts.DbTablePrefix + "Sondes", BackendConsts.DbSchema);
             sonde.ConfigureByConvention();
-            // sonde.HasMany(s => s.Mesures)
-            //     .WithOne(m => m.Sonde)
-            //     .HasForeignKey(m => m.SondeId)
-            //     .IsRequired();
+            sonde.HasMany(s => s.Mesures)
+                .WithOne(m => m.Sonde)
+                .HasForeignKey(m => m.SondeId)
+                .IsRequired();
         });
-        //
-        // builder.Entity<Mesure>(mesure =>
-        // {
-        //     mesure.ToTable(BackendConsts.DbTablePrefix + "Mesures", BackendConsts.DbSchema);
-        //     mesure.ConfigureByConvention();
-        // });
+        
+        builder.Entity<Mesure>(mesure =>
+        {
+            mesure.ToTable(BackendConsts.DbTablePrefix + "Mesures", BackendConsts.DbSchema);
+            mesure.ConfigureByConvention();
+        });
     }
 }

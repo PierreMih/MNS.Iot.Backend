@@ -7,7 +7,7 @@ using Volo.Abp.Domain.Entities.Auditing;
 
 namespace MNS.Iot.Backend.Magasins.Sondes {
     public class Sonde : FullAuditedAggregateRoot<Guid> {
-        // public List<Mesure> Mesures { get; set; }
+        public List<Mesure> Mesures { get; set; }
 
         public string IdPhysique { get; set; }
 
@@ -18,14 +18,14 @@ namespace MNS.Iot.Backend.Magasins.Sondes {
 
         protected Sonde()
         {
-            // Mesures = new();
+            Mesures = new();
         }
         public Sonde(Guid id, Machine machine, string idPhysique, string name): base(id) {
             MachineId = machine.Id;
             Machine = machine;
             IdPhysique = idPhysique;
             Name = name;
-            // Mesures = new();
+            Mesures = new();
         }
 
         // public void AjouterMesure(double temperature) {
