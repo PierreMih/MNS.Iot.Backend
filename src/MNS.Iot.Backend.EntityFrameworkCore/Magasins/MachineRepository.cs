@@ -17,6 +17,8 @@ public class MachineRepository : EfCoreRepository<BackendDbContext, Machine, Gui
 
     public override async Task<IQueryable<Machine>> WithDetailsAsync()
     {
-        return (await base.WithDetailsAsync()).Include( m => m.Sondes);
+        return (await base.WithDetailsAsync())
+            .Include( m => m.Sondes)
+            .ThenInclude(s => s.Mesures);
     }
 }

@@ -17,6 +17,9 @@ public class PasserelleRepository : EfCoreRepository<BackendDbContext, Passerell
     }
     public override async Task<IQueryable<Passerelle>> WithDetailsAsync()
     {
-        return (await base.WithDetailsAsync()).Include( p => p.Machines);
+        return (await base.WithDetailsAsync())
+            .Include( p => p.Machines)
+            .ThenInclude(m => m.Sondes)
+            .ThenInclude(s => s.Mesures);;
     }
 }

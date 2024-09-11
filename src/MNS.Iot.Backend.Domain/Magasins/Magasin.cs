@@ -17,6 +17,6 @@ namespace MNS.Iot.Backend.Magasins {
         }
 
         public string Name { get; set; }
-        public List<Passerelle> Passerelles { get; set; 
+        public List<Passerelle> Passerelles { get; set; }
     }
 }
