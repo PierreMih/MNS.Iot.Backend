@@ -1,7 +1,8 @@
 ﻿using AutoMapper;
+using MNS.Iot.Backend.Machines.DTOs.Outputs;
 using MNS.Iot.Backend.Magasins;
 using MNS.Iot.Backend.Magasins.DTOs.Outputs;
-// using MNS.Iot.Backend.Magasins.Machines;
+using MNS.Iot.Backend.Magasins.Machines;
 using MNS.Iot.Backend.Magasins.Passerelles;
 // using MNS.Iot.Backend.Magasins.Sondes;
 
@@ -13,7 +14,7 @@ public class BackendApplicationAutoMapperProfile : Profile
     {
         CreateMap<Magasin, MagasinDto>();
         CreateMap<Passerelle, PasserelleDto>();
-        // CreateMap<Machine, MachineDto>();
+        CreateMap<Machine, MachineDto>();
         // CreateMap<Sonde, SondeDto>();
         // CreateMap<Mesure, MesureDto>();
     }
