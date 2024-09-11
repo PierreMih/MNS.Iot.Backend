@@ -29,9 +29,9 @@ namespace MNS.Iot.Backend.Passerelles {
         }
         public async Task<PasserelleDto> CreatePasserelle(CreatePasserelleDto createPasserelleDto) {
             Magasin magasin = await _magasinRepository.GetAsync(createPasserelleDto.MagasinId);
-            Passerelle passerelle = new Passerelle(_guidGenerator.Create(), createPasserelleDto.Name, createPasserelleDto.IdPhysique);
-            
-            var je = new MagasinPasserelleJoinEntity(magasin.Id, passerelle.Id);
+            Passerelle passerelle = new Passerelle(_guidGenerator.Create(), magasin, createPasserelleDto.Name, createPasserelleDto.IdPhysique);
+            magasin.Passerelles.Add(passerelle);
+            // var je = new MagasinPasserelleJoinEntity(magasin.Id, passerelle.Id);
             // magasin.MagasinPasserelleJoinEntities.Add(je);
             
             // await _magasinPasserelleManager.AddPasserelleToMagasin(magasin, passerelle);
@@ -42,19 +42,29 @@ namespace MNS.Iot.Backend.Passerelles {
 
         public async Task DeletePasserelle(Guid id) {
             var passerelle = await _passerelleRepository.GetAsync(id);
-            var magasinList = await _magasinRepository.GetListAsync(true);
-            Magasin magasin = magasinList.First(m => m.MagasinPasserelleJoinEntities.Any(je => je.PasserelleId == id));
-            await _magasinPasserelleManager.DeletePasserelle(magasin, passerelle);
+
+            var magasin = passerelle.Magasin;
+
+            magasin.Passerelles.Remove(passerelle);
+            await _passerelleRepository.DeleteAsync(passerelle);
+            // var magasinList = await _magasinRepository.GetListAsync(true);
+            // Magasin magasin = magasinList.First(m => m.MagasinPasserelleJoinEntities.Any(je => je.PasserelleId == id));
+            // await _magasinPasserelleManager.DeletePasserelle(magasin, passerelle);
         }
 
-        public async Task<IEnumerable<PasserelleDto>> GetListPasserelle(Guid magasinId) {
-            Magasin magasin = await _magasinRepository.GetAsync(magasinId);
-            IEnumerable<Guid> passerelleIdList = magasin.MagasinPasserelleJoinEntities.Select(je => je.PasserelleId);
-            List<Passerelle> passerelleList = new();
-            foreach(var passerelleId in passerelleIdList) {
-                passerelleList.Add(await _passerelleRepository.GetAsync(passerelleId));
-            }
-            return passerelleList.Select(p => ObjectMapper.Map<Passerelle, PasserelleDto>(p));
+        public async Task<IEnumerable<PasserelleDto>> GetListPasserelle(Guid magasinId)
+        {
+            var query = await _passerelleRepository.GetQueryableAsync();
+            query = query.Where( p => p.MagasinId == magasinId);
+            return query.AsEnumerable().Select(p=> ObjectMapper.Map<Passerelle, PasserelleDto>(p));
+            
+            // Magasin magasin = await _magasinRepository.GetAsync(magasinId);
+            // IEnumerable<Guid> passerelleIdList = magasin.MagasinPasserelleJoinEntities.Select(je => je.PasserelleId);
+            // List<Passerelle> passerelleList = new();
+            // foreach(var passerelleId in passerelleIdList) {
+            //     passerelleList.Add(await _passerelleRepository.GetAsync(passerelleId));
+            // }
+            // return passerelleList.Select(p => ObjectMapper.Map<Passerelle, PasserelleDto>(p));
         }
 
         public async Task<PasserelleDto> GetPasserelle(Guid id) {

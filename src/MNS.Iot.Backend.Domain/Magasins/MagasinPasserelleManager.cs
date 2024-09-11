@@ -15,19 +15,19 @@ namespace MNS.Iot.Backend.Magasins {
             _magasinRepository = magasinRepository;
         }
 
-        public async Task<Magasin> AddPasserelleToMagasin(Magasin magasin, Passerelle passerelle)
-        {
-            var je = new MagasinPasserelleJoinEntity(magasin.Id, passerelle.Id);
-            magasin.MagasinPasserelleJoinEntities.Add(je);
-            // magasin = await _magasinRepository.UpdateAsync(magasin);
-            return magasin;
-        }
-
-        public async Task DeletePasserelle(Magasin magasin, Passerelle passerelle) {
-            MagasinPasserelleJoinEntity joinEntity = magasin.MagasinPasserelleJoinEntities
-                .First(je => je.MagasinId == magasin.Id && je.PasserelleId == passerelle.Id);
-            magasin.MagasinPasserelleJoinEntities.Remove(joinEntity);
-            // magasin = await _magasinRepository.UpdateAsync(magasin);
-        }
+        // public async Task<Magasin> AddPasserelleToMagasin(Magasin magasin, Passerelle passerelle)
+        // {
+        //     var je = new MagasinPasserelleJoinEntity(magasin.Id, passerelle.Id);
+        //     magasin.MagasinPasserelleJoinEntities.Add(je);
+        //     // magasin = await _magasinRepository.UpdateAsync(magasin);
+        //     return magasin;
+        // }
+        //
+        // public async Task DeletePasserelle(Magasin magasin, Passerelle passerelle) {
+        //     MagasinPasserelleJoinEntity joinEntity = magasin.MagasinPasserelleJoinEntities
+        //         .First(je => je.MagasinId == magasin.Id && je.PasserelleId == passerelle.Id);
+        //     magasin.MagasinPasserelleJoinEntities.Remove(joinEntity);
+        //     // magasin = await _magasinRepository.UpdateAsync(magasin);
+        // }
     }
 }

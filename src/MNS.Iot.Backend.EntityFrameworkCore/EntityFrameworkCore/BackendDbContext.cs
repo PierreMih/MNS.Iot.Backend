@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MNS.Iot.Backend.Magasins;
-using MNS.Iot.Backend.Magasins.Machines;
+// using MNS.Iot.Backend.Magasins.Machines;
 using MNS.Iot.Backend.Magasins.Passerelles;
-using MNS.Iot.Backend.Magasins.Sondes;
+// using MNS.Iot.Backend.Magasins.Sondes;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
 using Volo.Abp.BackgroundJobs.EntityFrameworkCore;
 using Volo.Abp.Data;
@@ -31,8 +31,8 @@ public class BackendDbContext :
 {
     public DbSet<Magasin> Magasins { get; set; }
     public DbSet<Passerelle> Passerelles { get; set; }
-    public DbSet<Machine> Machines { get; set; }
-    public DbSet<Sonde> Sondes { get; set; }
+    // public DbSet<Machine> Machines { get; set; }
+    // public DbSet<Sonde> Sondes { get; set; }
     
 
     #region Entities from the modules
@@ -86,62 +86,67 @@ public class BackendDbContext :
 
         /* Configure your own tables/entities inside here */
 
+        
+        
         builder.Entity<Magasin>(magasin =>
         {
             magasin.ToTable(BackendConsts.DbTablePrefix + "Magasins", BackendConsts.DbSchema);
             magasin.ConfigureByConvention();
-            magasin.HasMany(m => m.MagasinPasserelleJoinEntities).WithOne().HasForeignKey(je => je.MagasinId).IsRequired();
+            magasin.HasMany(m => m.Passerelles)
+                .WithOne(p => p.Magasin)
+                .HasForeignKey(p => p.MagasinId)
+                .IsRequired();
         });
-        builder.Entity<MagasinPasserelleJoinEntity>(mpje =>
-        {
-            mpje.ToTable(BackendConsts.DbTablePrefix + "MagasinPasserelleJoinEntities", BackendConsts.DbSchema);
-            mpje.ConfigureByConvention();
-            mpje.HasKey(je => je.MagasinId);
-            mpje.HasKey(je => je.PasserelleId);
-        });
-        
+        // builder.Entity<MagasinPasserelleJoinEntity>(mpje =>
+        // {
+        //     mpje.ToTable(BackendConsts.DbTablePrefix + "MagasinPasserelleJoinEntities", BackendConsts.DbSchema);
+        //     mpje.ConfigureByConvention();
+        //     mpje.HasKey(je => je.MagasinId);
+        //     mpje.HasKey(je => je.PasserelleId);
+        // });
+        //
         builder.Entity<Passerelle>(passerelle =>
         {
             passerelle.ToTable(BackendConsts.DbTablePrefix + "Passerelles", BackendConsts.DbSchema);
             passerelle.ConfigureByConvention();
-            passerelle.HasMany(p => p.MachinePasserelleJoinEntities).WithOne().IsRequired();
+            // passerelle.HasMany(p => p.MachinePasserelleJoinEntities).WithOne().IsRequired();
         });
-        builder.Entity<PasserelleMachineJoinEntity>(mpje =>
-        {
-            mpje.ToTable(BackendConsts.DbTablePrefix + "MachinePasserelleJoinEntities", BackendConsts.DbSchema);
-            mpje.ConfigureByConvention();
-            mpje.HasKey(je => je.PasserelleId);
-            mpje.HasKey(je => je.MachineId);
-        });
-        
-        builder.Entity<Machine>(machine =>
-        {
-            machine.ToTable(BackendConsts.DbTablePrefix + "Machines", BackendConsts.DbSchema);
-            machine.ConfigureByConvention();
-            machine.HasMany(m => m.MachineSondeJoinEntities).WithOne().IsRequired();
-        });
-        builder.Entity<MachineSondeJoinEntity>(msje =>
-        {
-            msje.ToTable(BackendConsts.DbTablePrefix + "MachineSondeJoinEntities", BackendConsts.DbSchema);
-            msje.ConfigureByConvention();
-            msje.HasKey(je => je.MachineId);
-            msje.HasKey(je => je.SondeId);
-        });
-        
-        builder.Entity<Sonde>(sonde =>
-        {
-            sonde.ToTable(BackendConsts.DbTablePrefix + "Sondes", BackendConsts.DbSchema);
-            sonde.ConfigureByConvention();
-            sonde.HasMany(s => s.Mesures)
-                .WithOne()
-                .HasForeignKey(m => m.SondeId)
-                .IsRequired();
-        });
-
-        builder.Entity<Mesure>(mesure =>
-        {
-            mesure.ToTable(BackendConsts.DbTablePrefix + "Mesures", BackendConsts.DbSchema);
-            mesure.ConfigureByConvention();
-        });
+        // builder.Entity<PasserelleMachineJoinEntity>(mpje =>
+        // {
+        //     mpje.ToTable(BackendConsts.DbTablePrefix + "MachinePasserelleJoinEntities", BackendConsts.DbSchema);
+        //     mpje.ConfigureByConvention();
+        //     mpje.HasKey(je => je.PasserelleId);
+        //     mpje.HasKey(je => je.MachineId);
+        // });
+        //
+        // builder.Entity<Machine>(machine =>
+        // {
+        //     machine.ToTable(BackendConsts.DbTablePrefix + "Machines", BackendConsts.DbSchema);
+        //     machine.ConfigureByConvention();
+        //     machine.HasMany(m => m.MachineSondeJoinEntities).WithOne().IsRequired();
+        // });
+        // builder.Entity<MachineSondeJoinEntity>(msje =>
+        // {
+        //     msje.ToTable(BackendConsts.DbTablePrefix + "MachineSondeJoinEntities", BackendConsts.DbSchema);
+        //     msje.ConfigureByConvention();
+        //     msje.HasKey(je => je.MachineId);
+        //     msje.HasKey(je => je.SondeId);
+        // });
+        //
+        // builder.Entity<Sonde>(sonde =>
+        // {
+        //     sonde.ToTable(BackendConsts.DbTablePrefix + "Sondes", BackendConsts.DbSchema);
+        //     sonde.ConfigureByConvention();
+        //     sonde.HasMany(s => s.Mesures)
+        //         .WithOne()
+        //         .HasForeignKey(m => m.SondeId)
+        //         .IsRequired();
+        // });
+        //
+        // builder.Entity<Mesure>(mesure =>
+        // {
+        //     mesure.ToTable(BackendConsts.DbTablePrefix + "Mesures", BackendConsts.DbSchema);
+        //     mesure.ConfigureByConvention();
+        // });
     }
 }

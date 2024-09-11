@@ -13,8 +13,8 @@ using Volo.Abp.EntityFrameworkCore;
 namespace MNS.Iot.Backend.Migrations
 {
     [DbContext(typeof(BackendDbContext))]
-    [Migration("20240910123126_Initial2")]
-    partial class Initial2
+    [Migration("20240911073340_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,86 +27,11 @@ namespace MNS.Iot.Backend.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("MNS.Iot.Backend.Magasins.Machines.Machine", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .IsRequired()
-                        .HasMaxLength(40)
-                        .HasColumnType("character varying(40)")
-                        .HasColumnName("ConcurrencyStamp");
-
-                    b.Property<DateTime>("CreationTime")
-                        .HasColumnType("timestamp without time zone")
-                        .HasColumnName("CreationTime");
-
-                    b.Property<Guid?>("CreatorId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("CreatorId");
-
-                    b.Property<Guid?>("DeleterId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("DeleterId");
-
-                    b.Property<DateTime?>("DeletionTime")
-                        .HasColumnType("timestamp without time zone")
-                        .HasColumnName("DeletionTime");
-
-                    b.Property<string>("ExtraProperties")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("ExtraProperties");
-
-                    b.Property<bool>("IsDeleted")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("boolean")
-                        .HasDefaultValue(false)
-                        .HasColumnName("IsDeleted");
-
-                    b.Property<DateTime?>("LastModificationTime")
-                        .HasColumnType("timestamp without time zone")
-                        .HasColumnName("LastModificationTime");
-
-                    b.Property<Guid?>("LastModifierId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("LastModifierId");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("AppMachines", (string)null);
-                });
-
-            modelBuilder.Entity("MNS.Iot.Backend.Magasins.Machines.MachineSondeJoinEntity", b =>
-                {
-                    b.Property<Guid>("SondeId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("MachineId")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("SondeId");
-
-                    b.HasIndex("MachineId");
-
-                    b.ToTable("AppMachineSondeJoinEntities", (string)null);
-                });
-
             modelBuilder.Entity("MNS.Iot.Backend.Magasins.Magasin", b =>
                 {
                     b.Property<Guid>("Id")
                         .HasColumnType("uuid");
 
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .IsRequired()
-                        .HasMaxLength(40)
-                        .HasColumnType("character varying(40)")
-                        .HasColumnName("ConcurrencyStamp");
-
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("timestamp without time zone")
                         .HasColumnName("CreationTime");
@@ -123,11 +48,6 @@ namespace MNS.Iot.Backend.Migrations
                         .HasColumnType("timestamp without time zone")
                         .HasColumnName("DeletionTime");
 
-                    b.Property<string>("ExtraProperties")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("ExtraProperties");
-
                     b.Property<bool>("IsDeleted")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("boolean")
@@ -142,25 +62,13 @@ namespace MNS.Iot.Backend.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("LastModifierId");
 
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.HasKey("Id");
 
                     b.ToTable("AppMagasins", (string)null);
-                });
-
-            modelBuilder.Entity("MNS.Iot.Backend.Magasins.MagasinPasserelleJoinEntity", b =>
-                {
-                    b.Property<Guid>("PasserelleId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("MagasinId")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("PasserelleId");
-
-                    b.HasIndex("MagasinId");
-
-                    b.ToTable("AppMagasinPasserelleJoinEntities", (string)null);
                 });
 
             modelBuilder.Entity("MNS.Iot.Backend.Magasins.Passerelles.Passerelle", b =>
@@ -168,13 +76,6 @@ namespace MNS.Iot.Backend.Migrations
                     b.Property<Guid>("Id")
                         .HasColumnType("uuid");
 
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .IsRequired()
-                        .HasMaxLength(40)
-                        .HasColumnType("character varying(40)")
-                        .HasColumnName("ConcurrencyStamp");
-
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("timestamp without time zone")
                         .HasColumnName("CreationTime");
@@ -190,100 +91,6 @@ namespace MNS.Iot.Backend.Migrations
                     b.Property<DateTime?>("DeletionTime")
                         .HasColumnType("timestamp without time zone")
                         .HasColumnName("DeletionTime");
-
-                    b.Property<string>("ExtraProperties")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("ExtraProperties");
-
-                    b.Property<bool>("IsDeleted")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("boolean")
-                        .HasDefaultValue(false)
-                        .HasColumnName("IsDeleted");
-
-                    b.Property<DateTime?>("LastModificationTime")
-                        .HasColumnType("timestamp without time zone")
-                        .HasColumnName("LastModificationTime");
-
-                    b.Property<Guid?>("LastModifierId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("LastModifierId");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("AppPasserelles", (string)null);
-                });
-
-            modelBuilder.Entity("MNS.Iot.Backend.Magasins.Passerelles.PasserelleMachineJoinEntity", b =>
-                {
-                    b.Property<Guid>("MachineId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("PasserelleId")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("MachineId");
-
-                    b.HasIndex("PasserelleId");
-
-                    b.ToTable("AppMachinePasserelleJoinEntities", (string)null);
-                });
-
-            modelBuilder.Entity("MNS.Iot.Backend.Magasins.Sondes.Mesure", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<Guid>("SondeId")
-                        .HasColumnType("uuid");
-
-                    b.Property<double>("Temperature")
-                        .HasColumnType("double precision");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("SondeId");
-
-                    b.ToTable("AppMesures", (string)null);
-                });
-
-            modelBuilder.Entity("MNS.Iot.Backend.Magasins.Sondes.Sonde", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .IsRequired()
-                        .HasMaxLength(40)
-                        .HasColumnType("character varying(40)")
-                        .HasColumnName("ConcurrencyStamp");
-
-                    b.Property<DateTime>("CreationTime")
-                        .HasColumnType("timestamp without time zone")
-                        .HasColumnName("CreationTime");
-
-                    b.Property<Guid?>("CreatorId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("CreatorId");
-
-                    b.Property<Guid?>("DeleterId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("DeleterId");
-
-                    b.Property<DateTime?>("DeletionTime")
-                        .HasColumnType("timestamp without time zone")
-                        .HasColumnName("DeletionTime");
-
-                    b.Property<string>("ExtraProperties")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("ExtraProperties");
 
                     b.Property<string>("IdPhysique")
                         .IsRequired()
@@ -303,9 +110,18 @@ namespace MNS.Iot.Backend.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("LastModifierId");
 
+                    b.Property<Guid>("MagasinId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.HasKey("Id");
 
-                    b.ToTable("AppSondes", (string)null);
+                    b.HasIndex("MagasinId");
+
+                    b.ToTable("AppPasserelles", (string)null);
                 });
 
             modelBuilder.Entity("Volo.Abp.AuditLogging.AuditLog", b =>
@@ -2100,40 +1916,15 @@ namespace MNS.Iot.Backend.Migrations
                     b.ToTable("AbpTenantConnectionStrings", (string)null);
                 });
 
-            modelBuilder.Entity("MNS.Iot.Backend.Magasins.Machines.MachineSondeJoinEntity", b =>
+            modelBuilder.Entity("MNS.Iot.Backend.Magasins.Passerelles.Passerelle", b =>
                 {
-                    b.HasOne("MNS.Iot.Backend.Magasins.Machines.Machine", null)
-                        .WithMany("MachineSondeJoinEntities")
-                        .HasForeignKey("MachineId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("MNS.Iot.Backend.Magasins.MagasinPasserelleJoinEntity", b =>
-                {
-                    b.HasOne("MNS.Iot.Backend.Magasins.Magasin", null)
-                        .WithMany("MagasinPasserelleJoinEntities")
+                    b.HasOne("MNS.Iot.Backend.Magasins.Magasin", "Magasin")
+                        .WithMany("Passerelles")
                         .HasForeignKey("MagasinId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
 
-            modelBuilder.Entity("MNS.Iot.Backend.Magasins.Passerelles.PasserelleMachineJoinEntity", b =>
-                {
-                    b.HasOne("MNS.Iot.Backend.Magasins.Passerelles.Passerelle", null)
-                        .WithMany("MachinePasserelleJoinEntities")
-                        .HasForeignKey("PasserelleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("MNS.Iot.Backend.Magasins.Sondes.Mesure", b =>
-                {
-                    b.HasOne("MNS.Iot.Backend.Magasins.Sondes.Sonde", null)
-                        .WithMany("Mesures")
-                        .HasForeignKey("SondeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("Magasin");
                 });
 
             modelBuilder.Entity("Volo.Abp.AuditLogging.AuditLogAction", b =>
@@ -2278,24 +2069,9 @@ namespace MNS.Iot.Backend.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("MNS.Iot.Backend.Magasins.Machines.Machine", b =>
-                {
-                    b.Navigation("MachineSondeJoinEntities");
-                });
-
             modelBuilder.Entity("MNS.Iot.Backend.Magasins.Magasin", b =>
                 {
-                    b.Navigation("MagasinPasserelleJoinEntities");
-                });
-
-            modelBuilder.Entity("MNS.Iot.Backend.Magasins.Passerelles.Passerelle", b =>
-                {
-                    b.Navigation("MachinePasserelleJoinEntities");
-                });
-
-            modelBuilder.Entity("MNS.Iot.Backend.Magasins.Sondes.Sonde", b =>
-                {
-                    b.Navigation("Mesures");
+                    b.Navigation("Passerelles");
                 });
 
             modelBuilder.Entity("Volo.Abp.AuditLogging.AuditLog", b =>

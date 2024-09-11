@@ -8,7 +8,7 @@ using Volo.Abp.Domain.Repositories;
 
 namespace MNS.Iot.Backend.Magasins {
     public interface IMagasinRepository : IRepository<Magasin, Guid> {
-        public Task<Magasin> GetMagasinByPasserelleId(Guid passerelleId);
+        // public Task<Magasin> GetMagasinByPasserelleId(Guid passerelleId);
     }
 
 }

@@ -15,8 +15,8 @@ public class MagasinRepository : EfCoreRepository<BackendDbContext, Magasin, Gui
     {
     }
 
-    public async Task<Magasin> GetMagasinByPasserelleId(Guid passerelleId) {
-        var query = await GetQueryableAsync();
-        return query.First(m => m.MagasinPasserelleJoinEntities.Any( je => je.PasserelleId == passerelleId));
-    }
+    // public async Task<Magasin> GetMagasinByPasserelleId(Guid passerelleId) {
+    //     var query = await GetQueryableAsync();
+    //     return query.First(m => m.MagasinPasserelleJoinEntities.Any( je => je.PasserelleId == passerelleId));
+    // }
 }
