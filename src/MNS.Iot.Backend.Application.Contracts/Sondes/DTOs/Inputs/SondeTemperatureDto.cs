@@ -8,6 +8,6 @@ namespace MNS.Iot.Backend.Sondes.DTOs.Inputs {
     public class SondeTemperatureDto {
         public string Sonde_id {  get; set; }
         public double Temperature { get; set; }
-        public string Timestamp { get; set; }
+        public long Timestamp { get; set; }
     }
 }

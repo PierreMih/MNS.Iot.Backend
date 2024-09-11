@@ -107,7 +107,7 @@ namespace MNS.Iot.Backend.Passerelles {
                 }
 
                 var mesure = new Mesure(_guidGenerator.Create(), sonde, dto.Temperature,
-                    DateTimeOffset.FromUnixTimeSeconds(long.Parse(dto.Timestamp)).DateTime);
+                    DateTimeOffset.FromUnixTimeSeconds(dto.Timestamp).DateTime);
                 mesure = await _mesureRepository.InsertAsync(mesure);
                 sonde.Mesures.Add(mesure);
             }
