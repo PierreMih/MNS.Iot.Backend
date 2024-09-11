@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper.Internal.Mappers;
 using Volo.Abp.Guids;
 using Volo.Abp.ObjectMapping;
 
@@ -51,17 +52,8 @@ namespace MNS.Iot.Backend.Passerelles {
 
         public async Task<IEnumerable<PasserelleDto>> GetListPasserelle(Guid magasinId)
         {
-            var query = await _passerelleRepository.GetQueryableAsync();
-            query = query.Where( p => p.MagasinId == magasinId);
-            return query.AsEnumerable().Select(p=> ObjectMapper.Map<Passerelle, PasserelleDto>(p));
-            
-            // Magasin magasin = await _magasinRepository.GetAsync(magasinId);
-            // IEnumerable<Guid> passerelleIdList = magasin.MagasinPasserelleJoinEntities.Select(je => je.PasserelleId);
-            // List<Passerelle> passerelleList = new();
-            // foreach(var passerelleId in passerelleIdList) {
-            //     passerelleList.Add(await _passerelleRepository.GetAsync(passerelleId));
-            // }
-            // return passerelleList.Select(p => ObjectMapper.Map<Passerelle, PasserelleDto>(p));
+            var magasin = await _magasinRepository.GetAsync(magasinId);
+            return magasin.Passerelles.Select(p => ObjectMapper.Map<Passerelle, PasserelleDto>(p));
         }
 
         public async Task<PasserelleDto> GetPasserelle(Guid id) {
