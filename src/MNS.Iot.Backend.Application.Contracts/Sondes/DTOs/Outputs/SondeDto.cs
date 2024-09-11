@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using MNS.Iot.Backend.Magasins.DTOs.Outputs;
+using MNS.Iot.Backend.Mesures.DTOs.Outputs;
 using Volo.Abp.Application.Dtos;
 
 namespace MNS.Iot.Backend.Sondes.DTOs.Outputs

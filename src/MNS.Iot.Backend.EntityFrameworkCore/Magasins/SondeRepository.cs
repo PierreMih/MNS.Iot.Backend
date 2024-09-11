@@ -14,4 +14,9 @@ public class SondeRepository : EfCoreRepository<BackendDbContext, Sonde, Guid>, 
     public SondeRepository(IDbContextProvider<BackendDbContext> dbContextProvider) : base(dbContextProvider)
     {
     }
+
+    public override async Task<IQueryable<Sonde>> WithDetailsAsync()
+    {
+        return (await base.WithDetailsAsync()).Include( s => s.Mesures);
+    }
 }
