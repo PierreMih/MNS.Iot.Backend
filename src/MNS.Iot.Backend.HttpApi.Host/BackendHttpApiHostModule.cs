@@ -150,7 +150,7 @@ public class BackendHttpApiHostModule : AbpModule
             options =>
             {
                 options.SwaggerDoc("v1", new OpenApiInfo { Title = "Backend API", Version = "v1" });
-                options.DocInclusionPredicate((docName, description) => true);
+                options.DocInclusionPredicate((docName, description) => description.RelativePath.Contains("api/app"));
                 options.CustomSchemaIds(type => type.FullName);
             });
     }
