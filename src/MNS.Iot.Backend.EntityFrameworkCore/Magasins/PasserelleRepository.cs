@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using MNS.Iot.Backend.EntityFrameworkCore;
 using MNS.Iot.Backend.Magasins.Passerelles;
 using Volo.Abp.Domain.Repositories.EntityFrameworkCore;
@@ -13,5 +14,9 @@ public class PasserelleRepository : EfCoreRepository<BackendDbContext, Passerell
 {
     public PasserelleRepository(IDbContextProvider<BackendDbContext> dbContextProvider) : base(dbContextProvider)
     {
+    }
+    public override async Task<IQueryable<Passerelle>> WithDetailsAsync()
+    {
+        return (await base.WithDetailsAsync()).Include( p => p.Machines);
     }
 }

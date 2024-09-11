@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using MNS.Iot.Backend.EntityFrameworkCore;
 using MNS.Iot.Backend.Magasins.Passerelles;
 using Volo.Abp.Domain.Repositories.EntityFrameworkCore;
@@ -15,8 +16,8 @@ public class MagasinRepository : EfCoreRepository<BackendDbContext, Magasin, Gui
     {
     }
 
-    // public async Task<Magasin> GetMagasinByPasserelleId(Guid passerelleId) {
-    //     var query = await GetQueryableAsync();
-    //     return query.First(m => m.MagasinPasserelleJoinEntities.Any( je => je.PasserelleId == passerelleId));
-    // }
+    public override async Task<IQueryable<Magasin>> WithDetailsAsync()
+    {
+        return (await base.WithDetailsAsync()).Include( m => m.Passerelles);
+    }
 }
