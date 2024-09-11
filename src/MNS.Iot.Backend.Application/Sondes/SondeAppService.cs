@@ -55,4 +55,12 @@ public class SondeAppService : BackendAppService, ISondeAppService
         machine.Sondes.Remove(sonde);
         await _sondeRepository.DeleteAsync(sonde);
     }
+
+    public async Task<SondeDto> MoveSondeToAnotherMachine(MoveSondeToAnotherMachineDto moveSondeToAnotherMachineDto) {
+        var sonde = await _sondeRepository.GetAsync(moveSondeToAnotherMachineDto.SondeId);
+
+        sonde.MachineId = moveSondeToAnotherMachineDto.NewMachineId;
+
+        return ObjectMapper.Map<Sonde, SondeDto>(sonde);
+    }
 }
