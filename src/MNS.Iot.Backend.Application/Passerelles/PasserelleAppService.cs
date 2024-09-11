@@ -6,6 +6,7 @@ using MNS.Iot.Backend.Passerelles.DTOs.Inputs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Dynamic.Core;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper.Internal.Mappers;
@@ -76,8 +77,21 @@ namespace MNS.Iot.Backend.Passerelles {
 
         public async Task InsertBatchMesures(SondeBatchDto sondeBatchDto)
         {
-            var passerelle = (await _passerelleRepository.GetQueryableAsync())
-                .First(p => p.IdPhysique == sondeBatchDto.PasserellePhysicalId);
+            var passerelleExiste = (await _passerelleRepository.GetQueryableAsync())
+                .Any(p => p.IdPhysique == sondeBatchDto.PasserellePhysicalId);
+            Passerelle passerelle;
+            if (passerelleExiste)
+            {
+                passerelle = (await _passerelleRepository.GetQueryableAsync())
+                    .First(p => p.IdPhysique == sondeBatchDto.PasserellePhysicalId);
+            }
+            else
+            {
+                var magasin = (await _magasinRepository.GetQueryableAsync()).First();
+                passerelle = new Passerelle(_guidGenerator.Create(), magasin, sondeBatchDto.PasserellePhysicalId,
+                    sondeBatchDto.PasserellePhysicalId);
+                passerelle = await _passerelleRepository.InsertAsync(passerelle);
+            } 
             foreach (var dto in sondeBatchDto.SondeTemperatureDtoList)
             {
                 var machines = passerelle.Machines;
