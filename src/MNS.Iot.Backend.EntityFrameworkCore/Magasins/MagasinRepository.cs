@@ -18,6 +18,10 @@ public class MagasinRepository : EfCoreRepository<BackendDbContext, Magasin, Gui
 
     public override async Task<IQueryable<Magasin>> WithDetailsAsync()
     {
-        return (await base.WithDetailsAsync()).Include( m => m.Passerelles);
+        return (await base.WithDetailsAsync())
+            .Include( m => m.Passerelles)
+            .ThenInclude(p => p.Machines)
+            .ThenInclude(m => m.Sondes)
+            .ThenInclude(s => s.Mesures);
     }
 }
