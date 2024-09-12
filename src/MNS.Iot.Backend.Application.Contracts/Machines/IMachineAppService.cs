@@ -10,7 +10,7 @@ namespace MNS.Iot.Backend.Machines;
 
 public interface IMachineAppService : IApplicationService
 {
-    public Task<IEnumerable<MachineDto>> GetMachinesByPasserelleIdAsync(Guid passerelleId);
+    public Task<DtoGenerique<MachineDto>> GetMachinesByPasserelleIdAsync(Guid passerelleId);
     public Task<MachineDto> GetMachineAsync(Guid id);
     public Task<MachineDto> CreateMachineAsync(CreateMachineDto createMachineDto);
     public Task DeleteMachineAsync(Guid id);

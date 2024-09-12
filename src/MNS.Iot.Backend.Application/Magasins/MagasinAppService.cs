@@ -30,9 +30,9 @@ namespace MNS.Iot.Backend.Magasins
             await _magasinRepository.DeleteAsync(magasin);
         }
 
-        public async Task<IEnumerable<MagasinDto>> GetListMagasin() {
+        public async Task<DtoGenerique<MagasinDto>> GetListMagasin() {
             var listMagasin = await _magasinRepository.GetListAsync(true);
-            return listMagasin.Select(m => ObjectMapper.Map<Magasin, MagasinDto>(m));
+            return new DtoGenerique<MagasinDto>(listMagasin.Select(m => ObjectMapper.Map<Magasin, MagasinDto>(m)));
         }
 
         public async Task<MagasinDto> GetMagasin(Guid id) {

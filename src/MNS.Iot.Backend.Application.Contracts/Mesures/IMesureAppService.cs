@@ -10,7 +10,7 @@ namespace MNS.Iot.Backend.Mesures;
 
 public interface IMesureAppService : IApplicationService
 {
-    public Task<IEnumerable<MesureDto>> GetMesuresBySondeIdAsync(Guid sondeId);
+    public Task<DtoGenerique<MesureDto>> GetMesuresBySondeIdAsync(Guid sondeId);
     public Task<MesureDto> GetMesureAsync(Guid id);
     public Task<MesureDto> CreateMesureAsync(CreateMesureDto createMesureDto);
     public Task DeleteMesureAsync(Guid id);

@@ -62,12 +62,12 @@ namespace MNS.Iot.Backend.Passerelles {
             await _passerelleRepository.DeleteAsync(passerelle);
         }
 
-        public async Task<IEnumerable<PasserelleDto>> GetListPasserelle(Guid magasinId)
+        public async Task<DtoGenerique<PasserelleDto>> GetListPasserelle(Guid magasinId)
         {
             var query = await _passerelleRepository.WithDetailsAsync();
             query = query.Where(p => p.MagasinId == magasinId);
             
-            return query.AsEnumerable().Select(p => ObjectMapper.Map<Passerelle, PasserelleDto>(p));
+            return new DtoGenerique<PasserelleDto>(query.AsEnumerable().Select(p => ObjectMapper.Map<Passerelle, PasserelleDto>(p)));
         }
 
         public async Task<PasserelleDto> GetPasserelle(Guid id) {

@@ -10,7 +10,7 @@ namespace MNS.Iot.Backend.Sondes;
 
 public interface ISondeAppService : IApplicationService
 {
-    public Task<IEnumerable<SondeDto>> GetSondesByMachineIdAsync(Guid machineId);
+    public Task<DtoGenerique<SondeDto>> GetSondesByMachineIdAsync(Guid machineId);
     public Task<SondeDto> GetSondeAsync(Guid id);
     public Task<SondeDto> CreateSondeAsync(CreateSondeDto createSondeDto);
     public Task<SondeDto> MoveSondeToAnotherMachine(MoveSondeToAnotherMachineDto moveSondeToAnotherMachineDto);

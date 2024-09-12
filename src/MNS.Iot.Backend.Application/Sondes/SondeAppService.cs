@@ -24,11 +24,11 @@ public class SondeAppService : BackendAppService, ISondeAppService
         _machineRepository = machineRepository;
     }
 
-    public async Task<IEnumerable<SondeDto>> GetSondesByMachineIdAsync(Guid machineId)
+    public async Task<DtoGenerique<SondeDto>> GetSondesByMachineIdAsync(Guid machineId)
     {
         var query = await _sondeRepository.WithDetailsAsync();
         query = query.Where(s => s.MachineId == machineId);
-        return query.AsEnumerable().Select(s => ObjectMapper.Map<Sonde, SondeDto>(s));
+        return new DtoGenerique<SondeDto>(query.AsEnumerable().Select(s => ObjectMapper.Map<Sonde, SondeDto>(s)));
     }
 
     public async Task<SondeDto> GetSondeAsync(Guid id)

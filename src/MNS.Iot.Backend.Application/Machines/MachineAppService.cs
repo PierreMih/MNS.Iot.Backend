@@ -23,11 +23,11 @@ public class MachineAppService : BackendAppService, IMachineAppService
         _passerelleRepository = passerelleRepository;
     }
 
-    public async Task<IEnumerable<MachineDto>> GetMachinesByPasserelleIdAsync(Guid passerelleId)
+    public async Task<DtoGenerique<MachineDto>> GetMachinesByPasserelleIdAsync(Guid passerelleId)
     {
         var query = await _machineRepository.WithDetailsAsync();
         query = query.Where(m => m.PasserelleId == passerelleId);
-        return query.AsEnumerable().Select(m => ObjectMapper.Map<Machine, MachineDto>(m));
+        return new DtoGenerique<MachineDto>(query.AsEnumerable().Select(m => ObjectMapper.Map<Machine, MachineDto>(m)));
     }
 
     public async Task<MachineDto> GetMachineAsync(Guid id)

@@ -23,10 +23,10 @@ public class MesureAppService : BackendAppService, IMesureAppService
         _guidGenerator = guidGenerator;
     }
 
-    public async Task<IEnumerable<MesureDto>> GetMesuresBySondeIdAsync(Guid sondeId)
+    public async Task<DtoGenerique<MesureDto>> GetMesuresBySondeIdAsync(Guid sondeId)
     {
         var sonde = await _sondeRepository.GetAsync(sondeId, true);
-        return sonde.Mesures.Select(m => ObjectMapper.Map<Mesure, MesureDto>(m));
+        return new DtoGenerique<MesureDto>(sonde.Mesures.Select(m => ObjectMapper.Map<Mesure, MesureDto>(m)));
     }
 
     public async Task<MesureDto> GetMesureAsync(Guid id)
