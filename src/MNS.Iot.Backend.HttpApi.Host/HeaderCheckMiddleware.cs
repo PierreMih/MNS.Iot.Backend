@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Http;
+using System;
 using System.Threading.Tasks;
 
 namespace MNS.Iot.Backend;
@@ -13,7 +14,9 @@ public class HeaderCheckMiddleware {
 
     public async Task InvokeAsync(HttpContext context) {
         Microsoft.Extensions.Primitives.StringValues value;
-        if (!context.Request.Headers.TryGetValue(RequiredHeaderName, out value) && value.Equals(RequiredToken)) {
+        var doesValueExist = context.Request.Headers.TryGetValue(RequiredHeaderName, out value);
+        Console.WriteLine($"value does exist : {doesValueExist}, value = {value}");
+        if (!doesValueExist && value.Equals(RequiredToken)) {
             context.Response.StatusCode = 401;
             await context.Response.WriteAsync($"missing header field '{RequiredHeaderName}'");
             return;
