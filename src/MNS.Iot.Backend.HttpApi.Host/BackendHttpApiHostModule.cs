@@ -164,8 +164,7 @@ public class BackendHttpApiHostModule : AbpModule
                 builder
                     .AllowAnyOrigin()
                     .AllowAnyHeader()
-                    .AllowAnyMethod()
-                    .AllowCredentials();
+                    .AllowAnyMethod();
             });
         });
     }
