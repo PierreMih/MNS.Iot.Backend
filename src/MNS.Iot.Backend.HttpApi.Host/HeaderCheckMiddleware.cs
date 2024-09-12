@@ -7,7 +7,7 @@ namespace MNS.Iot.Backend;
 public class HeaderCheckMiddleware : ITransientDependency{
     private readonly RequestDelegate _next;
     private const string RequiredHeaderName = "token";
-    private const string RequiredToken = "123token";
+    private const string RequiredToken = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c";
 
     public HeaderCheckMiddleware(RequestDelegate next) {
         _next = next;
