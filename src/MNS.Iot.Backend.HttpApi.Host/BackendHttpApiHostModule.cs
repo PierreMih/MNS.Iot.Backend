@@ -192,6 +192,7 @@ public class BackendHttpApiHostModule : AbpModule
             app.UseErrorPage();
         }
 
+        app.UseMiddleware<HeaderCheckMiddleware>();
         app.UseCorrelationId();
         app.UseStaticFiles();
         app.UseRouting();
@@ -220,7 +221,5 @@ public class BackendHttpApiHostModule : AbpModule
         app.UseAuditing();
         app.UseAbpSerilogEnrichers();
         app.UseConfiguredEndpoints();
-
-        app.UseMiddleware<HeaderCheckMiddleware>();
     }
 }
