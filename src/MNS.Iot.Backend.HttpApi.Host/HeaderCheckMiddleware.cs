@@ -18,7 +18,8 @@ public class HeaderCheckMiddleware : ITransientDependency{
         var doesValueExist = context.Request.Headers.TryGetValue(RequiredHeaderName, out value);
         if (!doesValueExist || !value.Equals(RequiredToken)) {
             context.Response.StatusCode = 401;
-            await context.Response.WriteAsync($"missing header field '{RequiredHeaderName}'");
+            await context.Response.WriteAsync($"Unauthorized");
+            // await context.Response.WriteAsync($"missing header field '{RequiredHeaderName}'");
             return;
         }
 
