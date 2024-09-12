@@ -220,5 +220,7 @@ public class BackendHttpApiHostModule : AbpModule
         app.UseAuditing();
         app.UseAbpSerilogEnrichers();
         app.UseConfiguredEndpoints();
+
+        app.UseMiddleware<HeaderCheckMiddleware>();
     }
 }
