@@ -12,5 +12,7 @@ namespace MNS.Iot.Backend.Magasins.DTOs.Outputs
     public class PasserelleDto : EntityDto<Guid>
     {
         public List<MachineDto> Machines { get; set; }
+        public string Name { get; set; }
+        public string IdPhysique { get; set; }
     }
 }
