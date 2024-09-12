@@ -162,7 +162,7 @@ public class BackendHttpApiHostModule : AbpModule
             options.AddDefaultPolicy(builder =>
             {
                 builder
-                    .SetIsOriginAllowedToAllowWildcardSubdomains()
+                    .AllowAnyOrigin()
                     .AllowAnyHeader()
                     .AllowAnyMethod()
                     .AllowCredentials();
