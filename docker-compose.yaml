@@ -52,6 +52,10 @@ services:
     restart: always
     ports:
       - '44371:8080'
+      - '44372:8081'
+    environment:
+      - ASPNETCORE_HTTPS_PORTS=8080
+      - ASPNETCORE_HTTP_PORTS=8081
     depends_on:
       migrator:
         condition: service_completed_successfully
