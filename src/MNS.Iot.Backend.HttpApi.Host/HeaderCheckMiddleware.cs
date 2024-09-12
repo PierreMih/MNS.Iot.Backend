@@ -22,11 +22,15 @@ public class HeaderCheckMiddleware : ITransientDependency{
         }
         Microsoft.Extensions.Primitives.StringValues value;
         var doesValueExist = context.Request.Headers.TryGetValue(RequiredHeaderName, out value);
-        if (!doesValueExist || !value.Equals(RequiredToken)) {
-            context.Response.StatusCode = 401;
-            await context.Response.WriteAsync($"Unauthorized");
-            // await context.Response.WriteAsync($"missing header field '{RequiredHeaderName}'");
-            return;
+        var method = context.Request.Method;
+        if(method == HttpMethods.Get || method == HttpMethods.Post)
+        {
+            if (!doesValueExist || !value.Equals(RequiredToken)) {
+                context.Response.StatusCode = 401;
+                await context.Response.WriteAsync($"Unauthorized");
+                // await context.Response.WriteAsync($"missing header field '{RequiredHeaderName}'");
+                return;
+            }
         }
 
         await _next(context);
