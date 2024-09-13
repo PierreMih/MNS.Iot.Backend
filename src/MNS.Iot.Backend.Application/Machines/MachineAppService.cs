@@ -40,7 +40,7 @@ public class MachineAppService : BackendAppService, IMachineAppService
     {
         var passerelleId = createMachineDto.PasserelleId;
         var passerelle = await _passerelleRepository.GetAsync(passerelleId);
-        var machine = new Machine(_guidGenerator.Create(), passerelleId, createMachineDto.Name, createMachineDto.IdPhysique);
+        var machine = new Machine(_guidGenerator.Create(), passerelleId, createMachineDto.IdPhysique, createMachineDto.Name);
         passerelle.Machines.Add(machine);
         machine = await _machineRepository.InsertAsync(machine);
         return ObjectMapper.Map<Machine, MachineDto>(machine);

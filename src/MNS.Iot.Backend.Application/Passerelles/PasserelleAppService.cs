@@ -46,7 +46,7 @@ namespace MNS.Iot.Backend.Passerelles {
         }
         public async Task<PasserelleDto> CreatePasserelle(CreatePasserelleDto createPasserelleDto) {
             Magasin magasin = await _magasinRepository.GetAsync(createPasserelleDto.MagasinId);
-            Passerelle passerelle = new Passerelle(_guidGenerator.Create(), magasin, createPasserelleDto.Name, createPasserelleDto.IdPhysique);
+            Passerelle passerelle = new Passerelle(_guidGenerator.Create(), magasin, createPasserelleDto.IdPhysique, createPasserelleDto.Name);
             magasin.Passerelles.Add(passerelle);
             passerelle = await _passerelleRepository.InsertAsync(passerelle);
 
